@@ -1,4 +1,5 @@
 import { initPlasmicLoader } from "@plasmicapp/loader-nextjs";
+import CatalogDownloader from '@/components/catalog-downloader';
 
 export const PLASMIC = initPlasmicLoader({
   projects: [
@@ -22,4 +23,23 @@ export const PLASMIC = initPlasmicLoader({
 // http://localhost:3000/plasmic-host).  See
 // https://docs.plasmic.app/learn/app-hosting/#set-a-plasmic-project-to-use-your-app-host
 
-// PLASMIC.registerComponent(...);
+PLASMIC.registerComponent(CatalogDownloader, {
+  name: 'CatalogDownloader',
+  props: {
+    downloadUrl: 'string',
+    buttonText: 'string',
+    children: 'slot',
+    header: 'slot',
+    darkMode: 'boolean',
+    elevation: {
+      type: 'choice',
+      options: ['high', 'medium', 'flat']
+    },
+    config: 'object',
+    headerColor: {
+      type: 'choice',
+      hidden: (props) => !props.header,
+      options: (props) => props.darkMode ? ['black', 'blue'] : ['yellow', 'green']
+    }
+  }
+});
